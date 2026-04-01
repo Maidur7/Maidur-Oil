@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAIDUR GOLD OIL</title>
+
+<style>
+body { margin:0; font-family: Arial; background:#0f2e1f; color:#fff; }
+
+header {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:20px; background:#0b2418;
+}
+header h1 { color:gold; }
+
+nav a {
+  color:white; margin:0 10px; text-decoration:none;
+  cursor:pointer; font-weight:bold;
+}
+
+.section { padding:60px 20px; text-align:center; }
+
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+.card {
+  width: 250px;
+  background: #123524;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+}
+.card:hover {
+  transform: scale(1.05);
+  transition: 0.3s;
+}
+.card img {
+  width:100%; height:220px; object-fit:contain;
+  background:white; border-radius:10px;
+}
+
+.btn {
+  background:gold; color:black;
+  padding:10px 15px; border:none; cursor:pointer;
+  font-weight:bold; margin-top:10px;
+}
+
+#cartCount {
+  background:gold; color:black;
+  padding:2px 8px; border-radius:50%;
+  margin-left:5px;
+}
+
+.whatsapp {
+  position:fixed; bottom:20px; right:20px;
+  background:#25D366; padding:15px;
+  border-radius:50%; color:white;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>MAIDUR GOLD OIL</h1>
+<nav>
+<a onclick="showPage('home')">Home</a>
+<a onclick="showPage('products')">Products</a>
+<a onclick="showPage('about')">About</a>
+<a onclick="showPage('cart')">Cart 🛒 <span id="cartCount">0</span></a>
+</nav>
+</header>
+
+<!-- HOME -->
+<section id="home" class="section">
+
+<video autoplay muted loop playsinline 
+style="width:100%; max-height:400px; object-fit:cover; border-radius:10px;">
+<source src="https://www.w3schools.com/html/mov_bbb.mp4">
+</video>
+<h2 style="margin-top:30px;">🔥 Newly Launched Products</h2>
+
+<div class="products">
+  <div class="card">
+    <img src="https://files.catbox.moe/bfy8b5.jpg">
+    <h3>Groundnut Oil</h3>
+    <p><span style="text-decoration: line-through; color:#aaa;">₹500</span> 
+    <span style="color:gold;">₹420</span></p>
+    <button onclick="addToCart('Groundnut Oil',420)" class="btn">
+      Add to Cart
+    </button>
+  </div>
+
+  <div class="card">
+    <img src="https://files.catbox.moe/bfy8b5.jpg">
+    <h3>Sunflower Oil</h3>
+    <p><span style="text-decoration: line-through; color:#aaa;">₹500</span> 
+    <span style="color:gold;">₹340</span></p>
+    <button onclick="addToCart('Sunflower Oil',380)" class="btn">
+      Add to Cart
+    </button>
+  </div>
+</div>
+
+<h2>From Village to Your Kitchen</h2>
+<p>Pure, Natural, Cold Pressed Oils</p>
+
+</section>
+
+<!-- PRODUCTS -->
+<section id="products" class="section" style="display:none;">
+<h2>Our Products</h2>
+
+<div class="products">
+
+  <div class="card">
+    <img src="https://files.catbox.moe/bfy8b5.jpg">
+    <h3>Groundnut Oil</h3>
+    <p><span style="text-decoration: line-through; color:#aaa;">₹500</span> 
+    <span style="color:gold;">₹420</span></p>
+    <button onclick="addToCart('Groundnut Oil',420)" class="btn">
+      Add to Cart
+    </button>
+  </div>
+
+  <div class="card">
+    <img src="https://files.catbox.moe/bfy8b5.jpg">
+    <h3>Sunflower Oil</h3>
+    <p><span style="text-decoration: line-through; color:#aaa;">₹500</span> 
+    <span style="color:gold;">₹340</span></p>
+    <button onclick="addToCart('Sunflower Oil',380)" class="btn">
+      Add to Cart
+    </button>
+  </div>
+
+</div>
+
+</section>
+<!-- ABOUT -->
+<section id="about" class="section" style="display:none;">
+<h2>About Us</h2>
+
+<p>We are a local brand bringing pure cold pressed oils directly from farmers.</p>
+
+<p>✔ 100% Natural & Chemical Free</p>
+<p>✔ Traditional Press Method</p>
+<p>✔ No Adulteration</p>
+<p>✔ Direct from Village to Your Kitchen</p>
+
+<p>We focus on quality, purity, and healthy living.</p>
+<p>. No middlemen.</p>
+</section>
+<section class="section">
+  <h2>Why Choose Us?</h2>
+
+  <p>🌿 Freshly Extracted Oils</p>
+  <p>🛢️ No Chemicals or Preservatives</p>
+  <p>🚚 Fast Delivery</p>
+  <p>⭐ Trusted by Local Customers</p>
+</section>
+<section class="section">
+  <h2>Customer Reviews</h2>
+
+  <p>⭐ "Very pure oil, good smell!" – Ramesh (Bangalore)</p>
+  <p>⭐ "Better than market brands, highly recommend" – Suresh (Hubli)</p>
+  <p>⭐ "Fast delivery and excellent quality" – Lakshmi (Ranibennur)</p>
+
+</section>
+<!-- CART -->
+<section id="cart" class="section" style="display:none;">
+<h2>Your Cart</h2>
+
+<div id="cartItems"></div>
+<h3 id="total">Total: ₹0</h3>
+
+<h3>Customer Details</h3>
+<input id="name" placeholder="Name"><br><br>
+<input id="phone" placeholder="Phone"><br><br>
+<input id="address" placeholder="Address"><br><br>
+
+<button onclick="orderNow()" class="btn">Order on WhatsApp</button>
+</section>
+
+<!-- CONTACT -->
+<section class="section">
+<h2>Contact</h2>
+<p>📷 Instagram: 
+  <a href="https://instagram.com/maidur_coldpress_oil
+" target="_blank" style="color:gold;">
+    @maidur_coldpress_oil
+  </a>
+</p>
+<p>📧 maidurcoldpressedoil@gmail.com
+</p>SSR
+</section>
+
+<a class="whatsapp" href="https://wa.me/919019879364" target="_blank">W</a>
+
+<footer class="section">
+<p>© 2026 MAIDUR GOLD OIL</p>
+</footer>
+
+<script>
+let cart = [];
+
+// PAGE SWITCH
+function showPage(page){
+document.getElementById("home").style.display="none";
+document.getElementById("products").style.display="none";
+document.getElementById("about").style.display="none";
+document.getElementById("cart").style.display="none";
+
+document.getElementById(page).style.display="block";
+}
+
+// ADD TO CART
+function addToCart(name,price){
+let item=cart.find(i=>i.name===name);
+
+if(item){ item.qty++; }
+else{ cart.push({name,price,qty:1}); }
+
+displayCart();
+updateCartCount();
+}
+
+// DISPLAY CART
+function displayCart(){
+let div=document.getElementById("cartItems");
+let total=0;
+div.innerHTML="";
+
+cart.forEach((i,index)=>{
+let t=i.price*i.qty;
+total+=t;
+
+div.innerHTML+=`
+<div style="background:#1b3a2b;padding:10px;margin:10px;border-radius:10px;">
+<b>${i.name}</b><br>
+₹${i.price} x ${i.qty} = ₹${t}<br>
+
+<button onclick="increase(${index})">➕</button>
+<button onclick="decrease(${index})">➖</button>
+<button onclick="removeItem(${index})">❌</button>
+</div>`;
+});
+
+document.getElementById("total").innerText="Total: ₹"+total;
+}
+
+// INCREASE
+function increase(i){
+cart[i].qty++;
+displayCart();
+updateCartCount();
+}
+
+// DECREASE
+function decrease(i){
+cart[i].qty--;
+if(cart[i].qty<=0) cart.splice(i,1);
+displayCart();
+updateCartCount();
+}
+
+// REMOVE
+function removeItem(i){
+cart.splice(i,1);
+displayCart();
+updateCartCount();
+}
+
+// CART COUNT
+function updateCartCount(){
+let count=0;
+cart.forEach(i=>count+=i.qty);
+document.getElementById("cartCount").innerText=count;
+}
+
+// ORDER
+function orderNow(){
+if(cart.length===0){ alert("Cart empty"); return; }
+
+let name=document.getElementById("name").value || "Not given";
+let phone=document.getElementById("phone").value || "Not given";
+let address=document.getElementById("address").value || "Not given";
+
+let total=0;
+let text="🛒 New Order\n\n📦 Order ID: ORD"+Math.floor(Math.random()*1000000)+"\n\n";
+
+cart.forEach(i=>{
+let t=i.price*i.qty;
+total+=t;
+text+=`${i.name} x ${i.qty} = ₹${t}\n`;
+});
+
+text+=`\n💰 Total: ₹${total}\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n🏠 Address: ${address}`;
+
+window.open("https://wa.me/917676610183?text="+encodeURIComponent(text));
+}
+function loadProducts(){
+  let products = JSON.parse(localStorage.getItem("products")) || [];
+
+  let container = document.getElementById("productList");
+  container.innerHTML = "";
+
+  products.forEach(p => {
+    container.innerHTML += `
+      <div class="card">
+        <img src="${p.image}" style="width:100%">
+        <h3>${p.name}</h3>
+        <p>₹${p.price}</p>
+        <button onclick="addToCart('${p.name}', ${p.price})" class="btn">
+          Add to Cart
+        </button>
+      </div>
+    `;
+  });
+}
+
+// DEFAULT PAGE
+showPage('home');
+</script>
+
+</body>
+</html>
