@@ -136,6 +136,11 @@ nav a {
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.85);
 }
 
+.product-slider .slider-dot {
+  width: 6px;
+  height: 6px;
+}
+
 .btn {
   background:gold; color:black;
   padding:10px 15px; border:none; cursor:pointer;
@@ -150,8 +155,17 @@ nav a {
 
 .whatsapp {
   position:fixed; bottom:20px; right:20px;
-  background:#25D366; padding:15px;
-  border-radius:50%; color:white;
+  width:46px; height:46px;
+  display:flex; align-items:center; justify-content:center;
+  border-radius:50%;
+  overflow:hidden;
+}
+
+.whatsapp img {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
 }
 header {
   position: sticky;
@@ -400,16 +414,13 @@ nav a {
 <section id="home" class="section">
 
 <div class="slider">
-  <img src="https://files.catbox.moe/r52xn6.png" class="slide active">
-  <img src="https://files.catbox.moe/iz0ee6.png" class="slide">
-  <img src="https://files.catbox.moe/4bork9.png" class="slide">
-  <img src="https://files.catbox.moe/ghq3os.png" class="slide">
+  <img src="https://i.ibb.co/dsKHY3fc/sale-poster.jpg" class="slide active">
+  <img src="https://i.ibb.co/3m0kqnmx/25-discount-poster.jpg" class="slide">
+ 
   <div class="slider-dots hero-slider-dots">
     <button class="slider-dot active" type="button" aria-label="Show hero photo 1"></button>
     <button class="slider-dot" type="button" aria-label="Show hero photo 2"></button>
-    <button class="slider-dot" type="button" aria-label="Show hero photo 3"></button>
-    <button class="slider-dot" type="button" aria-label="Show hero photo 4"></button>
-  </div>
+    </div>
 </div>
 <h2 style="margin:6px 0 18px;">🔥 Newly Launched Products</h2>
 
@@ -426,9 +437,8 @@ nav a {
 <div class="products">
   <div class="card">
     <img
-      src="https://files.catbox.moe/xsgi1n.png"
-      data-gallery="https://i.ibb.co/Qv979N8Y/1777648794497.png,https://i.ibb.co/DHRZzTPb/IMG-20260502-161430.jpg, https://i.ibb.co/DHRZzTPb/IMG-20260502-161430.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/Groundnut%20and%20bottles%20of%20Groundnut%20oil.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/4%20gallons%20of%20peanut%20oil.jpg"
-    >
+      src="https://i.ibb.co/yn1bjq4S/ground-nut-comparasion-websit.png"
+      data-gallery="https://i.ibb.co/4Z2X72Fw/Groundnut-frount-websit.jpg,https://i.ibb.co/wNhjvQ85/website-groundnut-backimage.jpg,https://i.ibb.co/GvK8FrDS/ground-nut-ingrendent-websit.jpg,https://i.ibb.co/YrLjVtV/groundnut-nutrition-websit.jpg,"    >
 <h3>Groundnut Oil (5 Liter)</h3>
     <p><span style="text-decoration: line-through; color:#aaa;">₹2800</span> 
     <span style="color:gold;">₹2000</span></p>
@@ -439,9 +449,10 @@ nav a {
 
   <div class="card">
     <img
-      src="https://files.catbox.moe/ghq3os.png"
-      data-gallery="https://files.catbox.moe/ghq3os.png, https://commons.wikimedia.org/wiki/Special:FilePath/Bottle%201%20liter%20Sunflower%20refined%20oil.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/Sunflower%20oil.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/Sunflowerseed%20oil.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/Sunflower%20seeds%20--%20sunflower%20oil.jpg"
+      src="https://i.ibb.co/1GPhB3Ys/sunflower-nutriation-lable-websit.jpg"
+      data-gallery="https://i.ibb.co/LB62gM5/1777696488198.png,https://i.ibb.co/FLvzv1j7/file-0000000036b47208989be0377f358640.png,https://i.ibb.co/gCm2nWd/suflower-ingredent-wewbsit.jpg,https://i.ibb.co/XxywGXPN/Screenshot-2026-05-05-074035.png"
     >
+    
     <h3>Sunflower Oil (5 Liter)</h3>
     <p><span style="text-decoration: line-through; color:#aaa;">₹3000</span> 
     <span style="color:gold;">₹2500</span></p>
@@ -471,65 +482,65 @@ nav a {
 <div class="products">
   <div class="card">
     <img
-      src="https://files.catbox.moe/xsgi1n.png"
-      data-gallery="https://files.catbox.moe/xsgi1n.png, https://commons.wikimedia.org/wiki/Special:FilePath/Groundnut%20oil.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/Peanut%20oil%20bottle.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/Groundnut%20and%20bottles%20of%20Groundnut%20oil.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/4%20gallons%20of%20peanut%20oil.jpg"
+      src="https://i.ibb.co/yn1bjq4S/ground-nut-comparasion-websit.png"
+      data-gallery="https://i.ibb.co/4Z2X72Fw/Groundnut-frount-websit.jpg,https://i.ibb.co/wNhjvQ85/website-groundnut-backimage.jpg,https://i.ibb.co/GvK8FrDS/ground-nut-ingrendent-websit.jpg,https://i.ibb.co/YrLjVtV/groundnut-nutrition-websit.jpg,"
     >
     <h3>Groundnut Oil (5 Liter)</h3>
     <p><span style="text-decoration: line-through; color:#aaa;">₹2800</span> 
     <span style="color:gold;">₹2000</span></p>
-    <button onclick="addToCart('Groundnut Oil (5L)',2000,'https://files.catbox.moe/xsgi1n.png')" class="btn">
+    <button onclick="addToCart('Groundnut Oil (5L)',2000,'https://i.ibb.co/4Z2X72Fw/Groundnut-frount-websit.jpg')" class="btn">
       Add to Cart
     </button>
   </div>
 
+ <div class="card">
+    <img
+      src="https://i.ibb.co/8gykRQBV/coconut-nutriration-websit.jpg"
+      data-gallery="https://i.ibb.co/twHwHK8p/coconut-wibsit-frount-image.jpg,https://i.ibb.co/DPWvGyZX/coconut-websit-back-lable.jpg,https://i.ibb.co/V0nqMmQc/coconut-ingredent-websit.jpg,https://i.ibb.co/BFvmDR7/cocnut-comparision-websit.png">
+    <h3>Coconut Oil (1 Liter)</h3>
+    <p><span style="text-decoration: line-through; color:#aaa;">₹500</span> 
+    <span style="color:gold;">₹420</span></p>
+    <button onclick="addToCart('Coconut Oil (1L)',420,'https://i.ibb.co/twHwHK8p/coconut-wibsit-frount-image.jpg')" class="btn">
+      Add to Cart
+    </button>
+  </div>
+
+
   <div class="card">
     <img
-      src="https://files.catbox.moe/ghq3os.png"
-      data-gallery="https://files.catbox.moe/ghq3os.png, https://commons.wikimedia.org/wiki/Special:FilePath/Bottle%201%20liter%20Sunflower%20refined%20oil.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/Sunflower%20oil.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/Sunflowerseed%20oil.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/Sunflower%20seeds%20--%20sunflower%20oil.jpg"
-   
+      src="https://i.ibb.co/1GPhB3Ys/sunflower-nutriation-lable-websit.jpg"
+      data-gallery="https://i.ibb.co/LB62gM5/1777696488198.png,https://i.ibb.co/FLvzv1j7/file-0000000036b47208989be0377f358640.png,https://i.ibb.co/gCm2nWd/suflower-ingredent-wewbsit.jpg,https://i.ibb.co/XxywGXPN/Screenshot-2026-05-05-074035.png"
+    >
     <h3>Sunflower Oil (5 Liter)</h3>
     <p><span style="text-decoration: line-through; color:#aaa;">₹3000</span> 
     <span style="color:gold;">₹2500</span></p>
-    <button onclick="addToCart('Sunflower Oil (5L)',2500,'https://files.catbox.moe/ghq3os.png')" class="btn">
+    <button onclick="addToCart('Sunflower Oil (5L)',2500,'https://i.ibb.co/LB62gM5/1777696488198.png')" class="btn">
       Add to Cart
     </button>
   </div>
-<div class="card">
-    <img
-      src="https://i.ibb.co/FL8v9MhQ/IMG-20260502-195605.jpg"
-      data-gallery="https://i.ibb.co/FL8v9MhQ/IMG-20260502-195605.jpg, https://i.ibb.co/FL8v9MhQ/IMG-20260502-195605.jpg, https://i.ibb.co/FL8v9MhQ/IMG-20260502-195605.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/Sunflowerseed%20oil.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/Sunflower%20seeds%20--%20sunflower%20oil.jpg"
-   
-    <h3> COCONUT  Oil (1 Liter)</h3>
-    <p><span style="text-decoration: line-through; color:#aaa;">₹3000</span> 
-    <span style="color:gold;">₹2500</span></p>
-    <button onclick="addToCart('Sunflower Oil (5L)',2500,'https://files.catbox.moe/ghq3os.png')" class="btn">
-      Add to Cart
-    </button>
-  </div>
-
 
   <div class="card">
     <img
-      src="https://files.catbox.moe/r52xn6.png"
-      data-gallery="https://files.catbox.moe/iz0ee6.png,https://files.catbox.moe/r52xn6.png, https://commons.wikimedia.org/wiki/Special:FilePath/Peanut%20oil%20bottle.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/Groundnut%20and%20bottles%20of%20Groundnut%20oil.jpg, https://files.catbox.moe/r52xn6.png"
-    >
+      src="https://i.ibb.co/yn1bjq4S/ground-nut-comparasion-websit.png"
+      data-gallery="https://i.ibb.co/4Z2X72Fw/Groundnut-frount-websit.jpg,https://i.ibb.co/wNhjvQ85/website-groundnut-backimage.jpg,https://i.ibb.co/GvK8FrDS/ground-nut-ingrendent-websit.jpg,https://i.ibb.co/YrLjVtV/groundnut-nutrition-websit.jpg,">
     <h3>Groundnut Oil (1 Liter)</h3>
     <p><span style="text-decoration: line-through; color:#aaa;">₹500</span> 
     <span style="color:gold;">₹420</span></p>
-    <button onclick="addToCart('Groundnut Oil (1L)',420,'https://files.catbox.moe/xsgi1n.png')" class="btn">
+    <button onclick="addToCart('Groundnut Oil (1L)',420,'https://i.ibb.co/4Z2X72Fw/Groundnut-frount-websit.jpg')" class="btn">
       Add to Cart
     </button>
   </div>
 
   <div class="card">
     <img
-      src="https://files.catbox.moe/tnkll4.png"
-      data-gallery="https://files.catbox.moe/u8f3y3.png, https://commons.wikimedia.org/wiki/Special:FilePath/Bottle%201%20liter%20Sunflower%20refined%20oil.jpg, https://commons.wikimedia.org/wiki/Special:FilePath/Sunflower%20oil.jpg, https://files.catbox.moe/439fu9.png"
+      src="https://i.ibb.co/1GPhB3Ys/sunflower-nutriation-lable-websit.jpg"
+      data-gallery="https://i.ibb.co/LB62gM5/1777696488198.png,https://i.ibb.co/FLvzv1j7/file-0000000036b47208989be0377f358640.png,https://i.ibb.co/gCm2nWd/suflower-ingredent-wewbsit.jpg,https://i.ibb.co/XxywGXPN/Screenshot-2026-05-05-074035.png"
+    
     >
     <h3>Sunflower Oil (1 Liter)</h3>
     <p><span style="text-decoration: line-through; color:#aaa;">₹500</span> 
     <span style="color:gold;">₹380</span></p>
-    <button onclick="addToCart('Sunflower Oil (1L)',380,'https://files.catbox.moe/bfy8b5.jpg')" class="btn">
+    <button onclick="addToCart('Sunflower Oil (1L)',380,'https://i.ibb.co/LB62gM5/1777696488198.png')" class="btn">
       Add to Cart
     </button>
   </div>
@@ -603,7 +614,7 @@ nav a {
 </p>SSR
 </section>
 <a class="whatsapp" href="https://wa.me/917676610183" target="_blank">
-  <i class="fab fa-whatsapp"></i>
+  <img alt="WhatsApp" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 370 370'%3E%3Ccircle cx='185' cy='185' r='185' fill='%2365d75c'/%3E%3Cpath d='M185 92c51 0 92 39 92 88s-41 88-92 88c-17 0-33-4-46-12l-50 14 14-48c-7-13-11-27-11-42 0-49 42-88 93-88z' fill='none' stroke='%23fff' stroke-width='17' stroke-linejoin='round'/%3E%3Cpath d='M145 130c-15 6-12 39 10 65 22 27 58 45 72 34l13-18-31-14-12 13c-18-7-33-20-41-38l10-13z' fill='%23fff'/%3E%3C/svg%3E">
 </a>
 r
 <footer class="section">
