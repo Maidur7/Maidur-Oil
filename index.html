@@ -66,22 +66,95 @@ nav a {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 20px;
+  gap: 28px;
+  align-items: stretch;
 }
 .card {
-  width: 250px;
-  background: #123524;
-  padding: 15px;
-  border-radius: 10px;
+  width: min(100%, 292px);
+  background: linear-gradient(145deg, #173f2a 0%, #0f2e1f 52%, #0a2016 100%);
+  padding: 22px 20px 24px;
+  border: 1px solid rgba(255, 215, 0, 0.18);
+  border-radius: 16px;
   text-align: center;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.24);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  box-sizing: border-box;
 }
 .card:hover {
-  transform: scale(1.05);
-  transition: 0.3s;
+  transform: translateY(-8px);
+  border-color: rgba(255, 215, 0, 0.42);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.34), 0 0 24px rgba(255, 215, 0, 0.16);
+}
+.card h3 {
+  min-height: 52px;
+  margin: 18px 0 12px;
+  color: #fff8dc;
+  font-size: 21px;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+.product-description {
+  display: -webkit-box;
+  max-width: 246px;
+  min-height: 1.62em;
+  margin: 0 auto 6px;
+  overflow: hidden;
+  color: #f5f1dc;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.62;
+  letter-spacing: 0.3px;
+  text-align: center;
+  text-wrap: pretty;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+.product-description.expanded {
+  display: block;
+  min-height: 0;
+  overflow: visible;
+  -webkit-line-clamp: unset;
+}
+.read-more-btn {
+  display: inline-block;
+  margin: 0 0 14px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #ffd700;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  line-height: 1.3;
+  text-decoration: none;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+.read-more-btn:hover {
+  color: #ffe680;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.26);
+}
+.card > p:not(.product-description) {
+  margin: 14px 0 20px;
+  font-size: 20px;
+  line-height: 1.2;
+}
+.card > p:not(.product-description) span:first-child {
+  color: #b9b9b9 !important;
+  font-size: 16px;
+  font-weight: 500;
+}
+.card > p:not(.product-description) span:last-child {
+  color: #ffd700 !important;
+  font-size: 23px;
+  font-weight: 800;
+  margin-left: 8px;
+  text-shadow: 0 0 12px rgba(255, 215, 0, 0.22);
 }
 .card img {
-  width:100%; height:220px; object-fit:contain;
-  background:white; border-radius:10px;
+  width: 100%; height: 220px; object-fit: contain;
+  background:white; border-radius:14px;
 }
 
 .product-slider {
@@ -139,6 +212,77 @@ nav a {
 .product-slider .slider-dot {
   width: 6px;
   height: 6px;
+}
+
+.zoom-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(0, 0, 0, 0.82);
+  box-sizing: border-box;
+}
+
+.zoom-modal.open {
+  display: flex;
+}
+
+.zoom-modal-content {
+  position: relative;
+  width: min(92vw, 720px);
+  height: min(72vh, 560px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.zoom-modal img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transform: scale(1);
+  transition: transform 0.2s ease;
+  touch-action: none;
+}
+
+.zoom-toolbar,
+.zoom-nav {
+  position: absolute;
+  z-index: 4;
+  display: flex;
+  gap: 8px;
+}
+
+.zoom-toolbar {
+  top: 12px;
+  right: 12px;
+}
+
+.zoom-nav {
+  display: none;
+}
+
+.zoom-control {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(15, 46, 31, 0.92);
+  color: gold;
+  cursor: pointer;
+  font-size: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.zoom-control:hover {
+  background: #173f2a;
+  color: #ffe680;
 }
 
 .btn {
@@ -248,6 +392,21 @@ nav a {
   border-radius: 14px;
   background: white;
   flex-shrink: 0;
+}
+
+.cart-item-slider {
+  width: 112px;
+  height: 112px;
+  flex-shrink: 0;
+}
+
+.cart-item-slider .slider-dots {
+  bottom: 8px;
+}
+
+.cart-item-slider .slider-dot {
+  width: 6px;
+  height: 6px;
 }
 
 .cart-item-details h4 {
@@ -390,12 +549,29 @@ nav a {
     height: 200px;
   }
 
+  .cart-item-slider {
+    width: 100%;
+    height: 210px;
+  }
+
   .cart-item-actions {
     align-items: flex-start;
     min-width: 0;
   }
 }
 
+@media (max-width: 640px) {
+  .section { padding: 44px 14px; }
+  .products { gap: 20px; }
+  .card { width: 100%; max-width: 340px; padding: 20px 18px 22px; }
+  .card h3 { min-height: auto; font-size: 20px; margin-bottom: 12px; }
+  .product-description { max-width: 100%; font-size: 16.5px; line-height: 1.6; }
+  .zoom-modal { padding: 10px; }
+  .zoom-modal-content {
+    width: 92vw;
+    height: 62vh;
+  }
+}
 </style>
 </head>
 
@@ -415,7 +591,7 @@ nav a {
 
 <div class="slider">
   <img src="https://i.ibb.co/dsKHY3fc/sale-poster.jpg" class="slide active">
-  <img src="https://i.ibb.co/3m0kqnmx/25-discount-poster.jpg" class="slide">
+  <img src="https://i.ibb.co/67N6hBCc/25-discount-poster.jpg" class="slide">
  
   <div class="slider-dots hero-slider-dots">
     <button class="slider-dot active" type="button" aria-label="Show hero photo 1"></button>
@@ -438,28 +614,32 @@ nav a {
   <div class="card">
     <img
       src="https://i.ibb.co/yn1bjq4S/ground-nut-comparasion-websit.png"
-      data-gallery="https://i.ibb.co/4Z2X72Fw/Groundnut-frount-websit.jpg,https://i.ibb.co/wNhjvQ85/website-groundnut-backimage.jpg,https://i.ibb.co/GvK8FrDS/ground-nut-ingrendent-websit.jpg,https://i.ibb.co/YrLjVtV/groundnut-nutrition-websit.jpg,"    >
+      data-gallery="https://i.ibb.co/WvJBXXd6/IMG-20260507-141410.png,https://i.ibb.co/wNhjvQ85/website-groundnut-backimage.jpg,https://i.ibb.co/GvK8FrDS/ground-nut-ingrendent-websit.jpg,https://i.ibb.co/YrLjVtV/groundnut-nutrition-websit.jpg,"    >
 <h3>Groundnut Oil (5 Liter)</h3>
-    <p><span style="text-decoration: line-through; color:#aaa;">₹2800</span> 
-    <span style="color:gold;">₹2000</span></p>
-<button onclick="addToCart('Groundnut Oil (5L)',2000,'https://files.catbox.moe/xsgi1n.png')" class="btn">
+    <p class="product-description">Wood Cold Pressed Groundnut Oil - 5 Liter | Pure & Natural Cooking Oil | Traditional Extraction | Rich Aroma | Chemical Free & Healthy for Daily Family Use</p>
+    <p><span style="text-decoration: line-through; color:#aaa;">₹2000</span> 
+    <span style="color:gold;">₹1650</span></p>
+<button onclick="addToCart('Groundnut Oil (5L)',1650,'https://i.ibb.co/WvJBXXd6/IMG-20260507-141410.png')" class="btn">
           Add to Cart
     </button>
   </div>
 
+
   <div class="card">
     <img
       src="https://i.ibb.co/1GPhB3Ys/sunflower-nutriation-lable-websit.jpg"
-      data-gallery="https://i.ibb.co/LB62gM5/1777696488198.png,https://i.ibb.co/FLvzv1j7/file-0000000036b47208989be0377f358640.png,https://i.ibb.co/gCm2nWd/suflower-ingredent-wewbsit.jpg,https://i.ibb.co/XxywGXPN/Screenshot-2026-05-05-074035.png"
+      data-gallery="https://i.ibb.co/CpLYYV5x/IMG-20260507-141500.png,https://i.ibb.co/FLvzv1j7/file-0000000036b47208989be0377f358640.png,https://i.ibb.co/gCm2nWd/suflower-ingredent-wewbsit.jpg,https://i.ibb.co/XxywGXPN/Screenshot-2026-05-05-074035.png"
     >
     
     <h3>Sunflower Oil (5 Liter)</h3>
-    <p><span style="text-decoration: line-through; color:#aaa;">₹3000</span> 
-    <span style="color:gold;">₹2500</span></p>
-<button onclick="addToCart('Sunflower Oil (5L)',2500,'https://files.catbox.moe/ghq3os.png')" class="btn">
+    <p class="product-description">Wood Pressed Sunflower Oil - 5 Liter | Light & Healthy Cooking Oil | Naturally Rich Nutrients | Perfect for Frying & Everyday Cooking</p>
+    <p><span style="text-decoration: line-through; color:#aaa;">₹1995</span> 
+    <span style="color:gold;">₹1845</span></p>
+<button onclick="addToCart('Sunflower Oil (5L)',1845,'https://i.ibb.co/CpLYYV5x/IMG-20260507-141500.png')" class="btn">
           Add to Cart
     </button>
   </div>
+
 </div>
 
 <h2>From Village to Your Kitchen</h2>
@@ -483,24 +663,27 @@ nav a {
   <div class="card">
     <img
       src="https://i.ibb.co/yn1bjq4S/ground-nut-comparasion-websit.png"
-      data-gallery="https://i.ibb.co/4Z2X72Fw/Groundnut-frount-websit.jpg,https://i.ibb.co/wNhjvQ85/website-groundnut-backimage.jpg,https://i.ibb.co/GvK8FrDS/ground-nut-ingrendent-websit.jpg,https://i.ibb.co/YrLjVtV/groundnut-nutrition-websit.jpg,"
+      data-gallery="https://i.ibb.co/WvJBXXd6/IMG-20260507-141410.png,https://i.ibb.co/wNhjvQ85/website-groundnut-backimage.jpg,https://i.ibb.co/GvK8FrDS/ground-nut-ingrendent-websit.jpg,https://i.ibb.co/YrLjVtV/groundnut-nutrition-websit.jpg,"
     >
     <h3>Groundnut Oil (5 Liter)</h3>
-    <p><span style="text-decoration: line-through; color:#aaa;">₹2800</span> 
-    <span style="color:gold;">₹2000</span></p>
-    <button onclick="addToCart('Groundnut Oil (5L)',2000,'https://i.ibb.co/4Z2X72Fw/Groundnut-frount-websit.jpg')" class="btn">
+    <p class="product-description">Wood Cold Pressed Groundnut Oil - 5 Liter | Pure & Natural Cooking Oil | Traditional Extraction | Rich Aroma | Chemical Free & Healthy for Daily Family Use</p>
+    <p><span style="text-decoration: line-through; color:#aaa;">₹2500</span> 
+    <span style="color:gold;">₹1650</span></p>
+    <button onclick="addToCart('Groundnut Oil (5L)',1650,'https://i.ibb.co/WvJBXXd6/IMG-20260507-141410.png')" class="btn">
       Add to Cart
     </button>
   </div>
+
 
  <div class="card">
     <img
       src="https://i.ibb.co/8gykRQBV/coconut-nutriration-websit.jpg"
       data-gallery="https://i.ibb.co/twHwHK8p/coconut-wibsit-frount-image.jpg,https://i.ibb.co/DPWvGyZX/coconut-websit-back-lable.jpg,https://i.ibb.co/V0nqMmQc/coconut-ingredent-websit.jpg,https://i.ibb.co/BFvmDR7/cocnut-comparision-websit.png">
     <h3>Coconut Oil (1 Liter)</h3>
+    <p class="product-description">Wood Pressed Coconut Oil - 1 Liter | Natural Aroma & Freshness | Multipurpose Pure Oil | Traditional Cold Extraction Method</p>
     <p><span style="text-decoration: line-through; color:#aaa;">₹500</span> 
-    <span style="color:gold;">₹420</span></p>
-    <button onclick="addToCart('Coconut Oil (1L)',420,'https://i.ibb.co/twHwHK8p/coconut-wibsit-frount-image.jpg')" class="btn">
+    <span style="color:gold;">₹360</span></p>
+    <button onclick="addToCart('Coconut Oil (1L)',360,'https://i.ibb.co/twHwHK8p/coconut-wibsit-frount-image.jpg')" class="btn">
       Add to Cart
     </button>
   </div>
@@ -509,12 +692,13 @@ nav a {
   <div class="card">
     <img
       src="https://i.ibb.co/1GPhB3Ys/sunflower-nutriation-lable-websit.jpg"
-      data-gallery="https://i.ibb.co/LB62gM5/1777696488198.png,https://i.ibb.co/FLvzv1j7/file-0000000036b47208989be0377f358640.png,https://i.ibb.co/gCm2nWd/suflower-ingredent-wewbsit.jpg,https://i.ibb.co/XxywGXPN/Screenshot-2026-05-05-074035.png"
+      data-gallery="https://i.ibb.co/CpLYYV5x/IMG-20260507-141500.png,https://i.ibb.co/FLvzv1j7/file-0000000036b47208989be0377f358640.png,https://i.ibb.co/gCm2nWd/suflower-ingredent-wewbsit.jpg,https://i.ibb.co/XxywGXPN/Screenshot-2026-05-05-074035.png"
     >
     <h3>Sunflower Oil (5 Liter)</h3>
-    <p><span style="text-decoration: line-through; color:#aaa;">₹3000</span> 
-    <span style="color:gold;">₹2500</span></p>
-    <button onclick="addToCart('Sunflower Oil (5L)',2500,'https://i.ibb.co/LB62gM5/1777696488198.png')" class="btn">
+    <p class="product-description">Wood Pressed Sunflower Oil - 5 Liter | Light & Healthy Cooking Oil | Naturally Rich Nutrients | Perfect for Frying & Everyday Cooking</p>
+    <p><span style="text-decoration: line-through; color:#aaa;">₹1995</span> 
+    <span style="color:gold;">₹1845</span></p>
+    <button onclick="addToCart('Sunflower Oil (5L)',1845,'https://i.ibb.co/CpLYYV5x/IMG-20260507-141500.png')" class="btn">
       Add to Cart
     </button>
   </div>
@@ -524,9 +708,10 @@ nav a {
       src="https://i.ibb.co/yn1bjq4S/ground-nut-comparasion-websit.png"
       data-gallery="https://i.ibb.co/4Z2X72Fw/Groundnut-frount-websit.jpg,https://i.ibb.co/wNhjvQ85/website-groundnut-backimage.jpg,https://i.ibb.co/GvK8FrDS/ground-nut-ingrendent-websit.jpg,https://i.ibb.co/YrLjVtV/groundnut-nutrition-websit.jpg,">
     <h3>Groundnut Oil (1 Liter)</h3>
+    <p class="product-description">Wood Pressed Groundnut Oil - 1 Liter | Premium Quality Peanuts | Naturally Extracted | Healthy Cooking Oil with Authentic Taste & Freshness</p>
     <p><span style="text-decoration: line-through; color:#aaa;">₹500</span> 
-    <span style="color:gold;">₹420</span></p>
-    <button onclick="addToCart('Groundnut Oil (1L)',420,'https://i.ibb.co/4Z2X72Fw/Groundnut-frount-websit.jpg')" class="btn">
+    <span style="color:gold;">₹360</span></p>
+    <button onclick="addToCart('Groundnut Oil (1L)',360,'https://i.ibb.co/4Z2X72Fw/Groundnut-frount-websit.jpg')" class="btn">
       Add to Cart
     </button>
   </div>
@@ -538,6 +723,7 @@ nav a {
     
     >
     <h3>Sunflower Oil (1 Liter)</h3>
+    <p class="product-description">Cold Pressed Sunflower Oil - 1 Liter | Pure & Chemical Free | Smooth Texture | Healthy Choice for Daily Cooking Needs</p>
     <p><span style="text-decoration: line-through; color:#aaa;">₹500</span> 
     <span style="color:gold;">₹380</span></p>
     <button onclick="addToCart('Sunflower Oil (1L)',380,'https://i.ibb.co/LB62gM5/1777696488198.png')" class="btn">
@@ -604,14 +790,13 @@ nav a {
 <!-- CONTACT -->
 <section class="section">
 <h2>Contact</h2>
-<p>📷 Instagram: 
-  <a href="https://instagram.com/maidur_coldpress_oil
-" target="_blank" style="color:gold;">
+<p><i class="fab fa-instagram" style="color:#E4405F; font-size:20px; margin-right:6px;"></i> Instagram: 
+  <a href="https://instagram.com/maidur_coldpress_oil" target="_blank" style="color:gold;">
     @maidur_coldpress_oil
   </a>
 </p>
 <p>📧 maidurcoldpressedoil@gmail.com
-</p>SSR
+</p>
 </section>
 <a class="whatsapp" href="https://wa.me/917676610183" target="_blank">
   <img alt="WhatsApp" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 370 370'%3E%3Ccircle cx='185' cy='185' r='185' fill='%2365d75c'/%3E%3Cpath d='M185 92c51 0 92 39 92 88s-41 88-92 88c-17 0-33-4-46-12l-50 14 14-48c-7-13-11-27-11-42 0-49 42-88 93-88z' fill='none' stroke='%23fff' stroke-width='17' stroke-linejoin='round'/%3E%3Cpath d='M145 130c-15 6-12 39 10 65 22 27 58 45 72 34l13-18-31-14-12 13c-18-7-33-20-41-38l10-13z' fill='%23fff'/%3E%3C/svg%3E">
@@ -689,9 +874,28 @@ function setupHeroSlider() {
   restartAutoSlide();
 }
 let cart = [];
+let currentPage = "home";
+let pageScrollPositions = {
+  home: 0,
+  products: 0,
+  about: 0,
+  cart: 0
+};
 
 // PAGE SWITCH
-function showPage(page){
+function saveCurrentPageState() {
+  if (currentPage) {
+    pageScrollPositions[currentPage] = window.scrollY || window.pageYOffset || 0;
+  }
+}
+
+function showPage(page, options = {}){
+  let validPages = ["home", "products", "about", "cart"];
+  if (!validPages.includes(page)) page = "home";
+
+  if (options.saveState !== false) {
+    saveCurrentPageState();
+  }
 
   // Hide only main pages
   document.getElementById("home").style.display = "none";
@@ -708,21 +912,73 @@ function showPage(page){
     document.getElementById(page).style.display = "block";
   }
 
-  // ✅ ALWAYS SCROLL TO TOP
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+  currentPage = page;
+
+  if (options.updateHistory !== false) {
+    let nextUrl = page === "home" ? window.location.pathname : "#" + page;
+    let historyData = { page: page };
+
+    if (options.replaceHistory) {
+      history.replaceState(historyData, "", nextUrl);
+    } else if ((page === "home" && window.location.hash !== "") || (page !== "home" && window.location.hash !== "#" + page)) {
+      history.pushState(historyData, "", nextUrl);
+    }
+  }
+
+  let scrollTop = options.restoreScroll === false ? 0 : (pageScrollPositions[page] || 0);
+
+  requestAnimationFrame(() => {
+    window.scrollTo({
+      top: scrollTop,
+      behavior: options.smoothScroll === false ? "auto" : "smooth"
+    });
   });
 }
 // ADD TO CART
 function addToCart(name,price,image){
+let gallery=getProductGallery(name,image);
 let item=cart.find(i=>i.name===name);
 
-if(item){ item.qty++; }
-else{ cart.push({name,price,image,qty:1}); }
+if(item){
+item.qty++;
+item.gallery=gallery;
+}
+else{ cart.push({name,price,image,gallery,qty:1}); }
 
 displayCart();
 updateCartCount();
+}
+
+function normalizeProductName(name) {
+return name.toLowerCase().replace(/liter/g,"l").replace(/[^a-z0-9]/g,"");
+}
+
+function getProductGallery(name,image) {
+let normalizedName=normalizeProductName(name);
+let matchingCard=null;
+
+document.querySelectorAll(".products .card").forEach(card=>{
+let title=card.querySelector("h3");
+if(!title || matchingCard) return;
+if(normalizeProductName(title.textContent)===normalizedName){
+matchingCard=card;
+}
+});
+
+let images=[];
+if(matchingCard){
+images=Array.from(matchingCard.querySelectorAll(".product-slide")).map(slide=>slide.src);
+if(images.length===0){
+let productImage=matchingCard.querySelector("img");
+if(productImage && productImage.dataset.gallery){
+images=productImage.dataset.gallery.split(",").map(src=>src.trim()).filter(Boolean);
+}
+}
+}
+
+if(images.length===0) images=[image];
+while(images.length<4) images.push(images[images.length-1]);
+return images.slice(0,4);
 }
 
 // DISPLAY CART
@@ -744,11 +1000,17 @@ return;
 cart.forEach((i,index)=>{
 let t=i.price*i.qty;
 total+=t;
+let gallery=(i.gallery&&i.gallery.length?i.gallery:getProductGallery(i.name,i.image)).slice(0,4);
 
 div.innerHTML+=`
 <div class="cart-item">
   <div class="cart-item-main">
-    <img src="${i.image}" alt="${i.name}" class="cart-item-image">
+    <div class="product-slider cart-item-slider" data-slider-ready="false">
+      ${gallery.map((src,photoIndex)=>`<img src="${src}" alt="${i.name} photo ${photoIndex + 1}" class="${photoIndex === 0 ? "product-slide active" : "product-slide"}">`).join("")}
+      <div class="slider-dots">
+        ${gallery.map((src,photoIndex)=>`<button class="${photoIndex === 0 ? "slider-dot active" : "slider-dot"}" type="button" aria-label="Show cart photo ${photoIndex + 1}"></button>`).join("")}
+      </div>
+    </div>
     <div class="cart-item-details">
       <h4>${i.name}</h4>
       <p>Price: ₹${i.price}</p>
@@ -768,6 +1030,7 @@ div.innerHTML+=`
 </div>`;
 });
 
+setupInteractiveProductSliders(document.querySelectorAll(".cart-item-slider"));
 document.getElementById("total").innerText="Total: ₹"+total;
 }
 
@@ -847,6 +1110,63 @@ function searchProducts(input) {
   });
 }
 
+function setupInteractiveProductSliders(sliders) {
+  sliders.forEach((slider) => {
+    if (slider.dataset.sliderReady === "true") return;
+
+    let slides = slider.querySelectorAll(".product-slide");
+    let dots = slider.querySelectorAll(".slider-dot");
+    let currentIndex = 0;
+    let touchStartX = 0;
+    let didSwipe = false;
+
+    if (slides.length < 2) return;
+    slider.dataset.sliderReady = "true";
+
+    function showSlide(nextIndex) {
+      slides[currentIndex].classList.remove("active");
+      dots[currentIndex].classList.remove("active");
+      currentIndex = (nextIndex + slides.length) % slides.length;
+      slides[currentIndex].classList.add("active");
+      dots[currentIndex].classList.add("active");
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener("click", () => {
+        showSlide(index);
+      });
+    });
+
+    slider.addEventListener("click", (event) => {
+      if (event.target.classList.contains("slider-dot")) return;
+      if (didSwipe) {
+        didSwipe = false;
+        return;
+      }
+      openProductZoom(slider, currentIndex);
+    });
+
+    slider.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0].clientX;
+      didSwipe = false;
+    }, { passive: true });
+
+    slider.addEventListener("touchend", (event) => {
+      let touchEndX = event.changedTouches[0].clientX;
+      let swipeDistance = touchEndX - touchStartX;
+
+      if (Math.abs(swipeDistance) < 30) return;
+
+      didSwipe = true;
+      if (swipeDistance < 0) {
+        showSlide(currentIndex + 1);
+      } else {
+        showSlide(currentIndex - 1);
+      }
+    }, { passive: true });
+  });
+}
+
 function setupProductSlides() {
   let productImages = document.querySelectorAll(".products .card > img");
 
@@ -890,49 +1210,241 @@ function setupProductSlides() {
     image.replaceWith(slider);
   });
 
-  document.querySelectorAll(".product-slider").forEach((slider) => {
-    let slides = slider.querySelectorAll(".product-slide");
-    let dots = slider.querySelectorAll(".slider-dot");
-    let currentIndex = 0;
-    let touchStartX = 0;
+  setupInteractiveProductSliders(document.querySelectorAll(".product-slider"));
+}
 
-    if (slides.length < 2) return;
+function setupProductZoomModal() {
+  if (document.getElementById("productZoomModal")) return;
 
-    function showSlide(nextIndex) {
-      slides[currentIndex].classList.remove("active");
-      dots[currentIndex].classList.remove("active");
-      currentIndex = (nextIndex + slides.length) % slides.length;
-      slides[currentIndex].classList.add("active");
-      dots[currentIndex].classList.add("active");
+  let modal = document.createElement("div");
+  modal.id = "productZoomModal";
+  modal.className = "zoom-modal";
+  modal.innerHTML = `
+    <div class="zoom-modal-content" role="dialog" aria-modal="true" aria-label="Product photo zoom">
+      <img id="zoomImage" alt="Zoomed product photo">
+      <div class="zoom-toolbar">
+        <button class="zoom-control" type="button" data-zoom-action="close" aria-label="Close zoom"><i class="fas fa-xmark"></i></button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  setupZoomGestures();
+
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) closeProductZoom();
+  });
+
+  modal.querySelectorAll("[data-zoom-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      handleZoomAction(button.dataset.zoomAction);
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (!modal.classList.contains("open")) return;
+
+    if (event.key === "Escape") closeProductZoom();
+    if (event.key === "ArrowLeft") handleZoomAction("prev");
+    if (event.key === "ArrowRight") handleZoomAction("next");
+    if (event.key === "+") handleZoomAction("in");
+    if (event.key === "-") handleZoomAction("out");
+  });
+}
+
+let activeZoomImages = [];
+let activeZoomIndex = 0;
+let activeZoomScale = 1;
+let activeZoomX = 0;
+let activeZoomY = 0;
+let pinchStartDistance = 0;
+let pinchStartScale = 1;
+let pinchMaxScale = 1;
+let dragStartX = 0;
+let dragStartY = 0;
+let dragOriginX = 0;
+let dragOriginY = 0;
+let isDraggingZoomImage = false;
+let zoomSwipeStartX = 0;
+let zoomSwipeStartY = 0;
+let lastZoomTapTime = 0;
+let lastTwoFingerTapTime = 0;
+let zoomGestureHadTwoFingers = false;
+
+function openProductZoom(slider, startIndex) {
+  setupProductZoomModal();
+
+  activeZoomImages = Array.from(slider.querySelectorAll(".product-slide")).map(slide => slide.src);
+  activeZoomIndex = startIndex || 0;
+  resetZoomPosition();
+
+  updateZoomImage();
+  document.getElementById("productZoomModal").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeProductZoom() {
+  let modal = document.getElementById("productZoomModal");
+  if (!modal) return;
+
+  modal.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+function updateZoomImage() {
+  let image = document.getElementById("zoomImage");
+  if (!image || activeZoomImages.length === 0) return;
+
+  image.src = activeZoomImages[activeZoomIndex];
+  image.style.transform = `translate(${activeZoomX}px, ${activeZoomY}px) scale(${activeZoomScale})`;
+}
+
+function resetZoomPosition() {
+  activeZoomScale = 1;
+  activeZoomX = 0;
+  activeZoomY = 0;
+}
+
+function handleZoomAction(action) {
+  if (action === "close") {
+    closeProductZoom();
+    return;
+  }
+
+  if (action === "in") activeZoomScale = Math.min(activeZoomScale + 0.25, 3);
+  if (action === "out") activeZoomScale = Math.max(activeZoomScale - 0.25, 1);
+  if (action === "reset") resetZoomPosition();
+  if (action === "prev") {
+    activeZoomIndex = (activeZoomIndex - 1 + activeZoomImages.length) % activeZoomImages.length;
+    resetZoomPosition();
+  }
+  if (action === "next") {
+    activeZoomIndex = (activeZoomIndex + 1) % activeZoomImages.length;
+    resetZoomPosition();
+  }
+
+  if (activeZoomScale === 1) {
+    activeZoomX = 0;
+    activeZoomY = 0;
+  }
+
+  updateZoomImage();
+}
+
+function getTouchDistance(touches) {
+  let dx = touches[0].clientX - touches[1].clientX;
+  let dy = touches[0].clientY - touches[1].clientY;
+  return Math.hypot(dx, dy);
+}
+
+function setupZoomGestures() {
+  let image = document.getElementById("zoomImage");
+  if (!image || image.dataset.gesturesReady === "true") return;
+
+  image.dataset.gesturesReady = "true";
+
+  image.addEventListener("touchstart", (event) => {
+    if (event.touches.length === 2) {
+      event.preventDefault();
+      zoomGestureHadTwoFingers = true;
+      pinchStartDistance = getTouchDistance(event.touches);
+      pinchStartScale = activeZoomScale;
+      pinchMaxScale = activeZoomScale;
+      return;
     }
 
-    dots.forEach((dot, index) => {
-      dot.addEventListener("click", () => {
-        showSlide(index);
-      });
-    });
+    if (event.touches.length === 1 && activeZoomScale > 1) {
+      event.preventDefault();
+      isDraggingZoomImage = true;
+      dragStartX = event.touches[0].clientX;
+      dragStartY = event.touches[0].clientY;
+      dragOriginX = activeZoomX;
+      dragOriginY = activeZoomY;
+      return;
+    }
 
-    slider.addEventListener("click", (event) => {
-      if (event.target.classList.contains("slider-dot")) return;
-      showSlide(currentIndex + 1);
-    });
+    if (event.touches.length === 1) {
+      zoomSwipeStartX = event.touches[0].clientX;
+      zoomSwipeStartY = event.touches[0].clientY;
+    }
+  }, { passive: false });
 
-    slider.addEventListener("touchstart", (event) => {
-      touchStartX = event.changedTouches[0].clientX;
-    }, { passive: true });
+  image.addEventListener("touchmove", (event) => {
+    if (event.touches.length === 2 && pinchStartDistance > 0) {
+      event.preventDefault();
+      zoomGestureHadTwoFingers = true;
+      let nextScale = pinchStartScale * (getTouchDistance(event.touches) / pinchStartDistance);
+      pinchMaxScale = Math.max(pinchMaxScale, Math.min(nextScale, 4));
+      activeZoomScale = pinchMaxScale;
 
-    slider.addEventListener("touchend", (event) => {
-      let touchEndX = event.changedTouches[0].clientX;
-      let swipeDistance = touchEndX - touchStartX;
+      updateZoomImage();
+      return;
+    }
 
-      if (Math.abs(swipeDistance) < 30) return;
+    if (event.touches.length === 1 && isDraggingZoomImage) {
+      event.preventDefault();
+      activeZoomX = dragOriginX + event.touches[0].clientX - dragStartX;
+      activeZoomY = dragOriginY + event.touches[0].clientY - dragStartY;
+      updateZoomImage();
+    }
+  }, { passive: false });
 
-      if (swipeDistance < 0) {
-        showSlide(currentIndex + 1);
-      } else {
-        showSlide(currentIndex - 1);
+  image.addEventListener("touchend", (event) => {
+    let now = Date.now();
+    if (zoomGestureHadTwoFingers && event.touches.length > 0) {
+      activeZoomScale = Math.max(activeZoomScale, pinchMaxScale);
+      updateZoomImage();
+      return;
+    }
+
+    if (event.changedTouches.length >= 2 || zoomGestureHadTwoFingers) {
+      if (now - lastTwoFingerTapTime < 360) {
+        resetZoomPosition();
+        pinchStartDistance = 0;
+        isDraggingZoomImage = false;
+        zoomGestureHadTwoFingers = false;
+        updateZoomImage();
+        lastTwoFingerTapTime = 0;
+        return;
       }
-    }, { passive: true });
+
+      lastTwoFingerTapTime = now;
+      pinchStartDistance = 0;
+      isDraggingZoomImage = false;
+      activeZoomScale = Math.max(activeZoomScale, pinchMaxScale);
+      zoomGestureHadTwoFingers = false;
+      updateZoomImage();
+      return;
+    }
+
+    if (event.changedTouches.length === 1 && now - lastZoomTapTime < 320) {
+      resetZoomPosition();
+      pinchStartDistance = 0;
+      isDraggingZoomImage = false;
+      updateZoomImage();
+      lastZoomTapTime = 0;
+      return;
+    }
+    lastZoomTapTime = now;
+
+    if (activeZoomScale === 1 && event.changedTouches.length === 1) {
+      let swipeX = event.changedTouches[0].clientX - zoomSwipeStartX;
+      let swipeY = event.changedTouches[0].clientY - zoomSwipeStartY;
+
+      if (Math.abs(swipeX) > 45 && Math.abs(swipeX) > Math.abs(swipeY)) {
+        handleZoomAction(swipeX < 0 ? "next" : "prev");
+        return;
+      }
+    }
+
+    if (activeZoomScale < 1.05) resetZoomPosition();
+    pinchStartDistance = 0;
+    isDraggingZoomImage = false;
+    updateZoomImage();
+  });
+
+  image.addEventListener("dblclick", () => {
+    resetZoomPosition();
+    updateZoomImage();
   });
 }
 function loadProducts(){
@@ -955,10 +1467,55 @@ function loadProducts(){
   });
 }
 
+function setupReadMoreDescriptions() {
+  document.querySelectorAll(".product-description").forEach((description) => {
+    if (description.nextElementSibling && description.nextElementSibling.classList.contains("read-more-btn")) return;
+
+    let button = document.createElement("button");
+    button.type = "button";
+    button.className = "read-more-btn";
+    button.textContent = "Read more";
+
+    button.addEventListener("click", () => {
+      let isExpanded = description.classList.toggle("expanded");
+      button.textContent = isExpanded ? "Read less" : "Read more";
+    });
+
+    description.insertAdjacentElement("afterend", button);
+  });
+}
+
+function getPageFromUrl() {
+  let page = window.location.hash.replace("#", "");
+  let validPages = ["home", "products", "about", "cart"];
+  return validPages.includes(page) ? page : "home";
+}
+
+window.addEventListener("popstate", (event) => {
+  let page = event.state && event.state.page ? event.state.page : getPageFromUrl();
+  showPage(page, {
+    updateHistory: false,
+    restoreScroll: true,
+    smoothScroll: false
+  });
+});
+
+window.addEventListener("beforeunload", saveCurrentPageState);
+
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
 // DEFAULT PAGE
 setupHeroSlider();
 setupProductSlides();
-showPage('home');
+setupReadMoreDescriptions();
+showPage(getPageFromUrl(), {
+  replaceHistory: true,
+  restoreScroll: true,
+  smoothScroll: false,
+  saveState: false
+});
 </script>
 
 </body>
