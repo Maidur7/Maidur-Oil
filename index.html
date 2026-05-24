@@ -572,6 +572,52 @@ nav a {
     height: 62vh;
   }
 }
+
+.coupon-block {
+  margin-bottom: 18px;
+}
+.coupon-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.coupon-row input {
+  flex: 1 1 160px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.96);
+  color: #103221;
+  min-width: 140px;
+}
+.coupon-message {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ffd700;
+}
+.summary-breakdown {
+  background: rgba(255,255,255,0.08);
+  padding: 14px 16px;
+  border-radius: 14px;
+  margin: 14px 0 20px;
+}
+.summary-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: #f4f1d9;
+}
+.summary-total {
+  font-weight: 700;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  padding-top: 10px;
+  margin-top: 10px;
+}
+.coupon-remove-btn {
+  background: #ffd7dc;
+  color: #9f1737;
+}
 </style>
 </head>
 
@@ -757,6 +803,21 @@ nav a {
   <div class="cart-summary">
     <h3 id="total">Total: ₹0</h3>
 
+    <div class="coupon-block">
+      <div class="coupon-row">
+        <input id="couponCode" placeholder="Discount Code" aria-label="Discount Code">
+        <button id="applyCouponBtn" class="btn" type="button" onclick="applyCoupon()">Apply Coupon</button>
+        <button id="removeCouponBtn" class="btn coupon-remove-btn" type="button" onclick="removeCoupon()" style="display:none;">Remove</button>
+      </div>
+      <div id="couponMessage" class="coupon-message">Enter a coupon code like FIRST10 or SAVE50.</div>
+    </div>
+
+    <div class="summary-breakdown">
+      <div class="summary-line"><span>Original subtotal</span><span id="originalSubtotal">₹0</span></div>
+      <div class="summary-line"><span>Discount</span><span id="discountAmount">₹0</span></div>
+      <div class="summary-line summary-total"><span>Final total</span><span id="finalTotal">₹0</span></div>
+    </div>
+
     <h3 style="font-size:28px; margin-bottom:0;">Customer Details</h3>
     <div class="cart-form">
       <input id="name" placeholder="Name">
@@ -773,6 +834,7 @@ nav a {
 
   <p>🌿 Freshly Extracted Oils</p>
   <p>🛢️ No Chemicals or Preservatives</p>
+
   <p>🚚 Fast Delivery</p>
   <p>⭐ Trusted by Local Customers</p>
 </section>
@@ -873,6 +935,13 @@ function setupHeroSlider() {
   restartAutoSlide();
 }
 let cart = [];
+// Coupon data stored separately for easy editing
+const couponCodes = {
+  "SAVE50": { type: "fixed", amount: 50, description: "₹50 off" },
+"KIRAN100": { type: "fixed", amount: 100, description: "₹100 off" },
+    "FIRST10": { type: "percent", amount: 10, description: "10% off" }
+};
+let appliedCoupon = null;
 let currentPage = "home";
 let pageScrollPositions = {
   home: 0,
@@ -992,7 +1061,16 @@ div.innerHTML=`
   <h3>Your cart is empty</h3>
   <p>Add your favorite cold pressed oils to see them here.</p>
 </div>`;
+document.getElementById("originalSubtotal").innerText = "₹0";
+document.getElementById("discountAmount").innerText = "₹0";
+document.getElementById("finalTotal").innerText = "₹0";
 document.getElementById("total").innerText="Total: ₹0";
+let removeBtn = document.getElementById('removeCouponBtn');
+let applyBtn = document.getElementById('applyCouponBtn');
+if (removeBtn && applyBtn) {
+  removeBtn.style.display = appliedCoupon ? 'inline-flex' : 'none';
+  applyBtn.disabled = !!appliedCoupon;
+}
 return;
 }
 
@@ -1030,7 +1108,17 @@ div.innerHTML+=`
 });
 
 setupInteractiveProductSliders(document.querySelectorAll(".cart-item-slider"));
-document.getElementById("total").innerText="Total: ₹"+total;
+let totals = calculateTotals(total);
+document.getElementById("originalSubtotal").innerText = "₹" + totals.subtotal;
+document.getElementById("discountAmount").innerText = totals.discount > 0 ? "- ₹" + totals.discount : "₹0";
+document.getElementById("finalTotal").innerText = "₹" + totals.final;
+document.getElementById("total").innerText="Total: ₹"+totals.final;
+let removeBtn = document.getElementById('removeCouponBtn');
+let applyBtn = document.getElementById('applyCouponBtn');
+if (removeBtn && applyBtn) {
+  removeBtn.style.display = appliedCoupon ? 'inline-flex' : 'none';
+  applyBtn.disabled = !!appliedCoupon;
+}
 }
 
 // INCREASE
@@ -1078,10 +1166,76 @@ total+=t;
 text+=`${i.name} x ${i.qty} = ₹${t}\n`;
 });
 
-text+=`\n💰 Total: ₹${total}\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n🏠 Address: ${address}`;
+let totals = calculateTotals(total);
+text+=`\n💰 Total: ₹${totals.final}`;
+if (appliedCoupon) {
+  text += ` (Saved ₹${totals.discount} with ${appliedCoupon.code})`;
+}
+text+=`\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n🏠 Address: ${address}`;
 
 window.open("https://wa.me/917676610183?text="+encodeURIComponent(text));
 }
+
+function calculateTotals(subtotal){
+  let discount = 0;
+  if (appliedCoupon){
+    if (appliedCoupon.type === 'fixed'){
+      discount = Math.min(appliedCoupon.amount, subtotal);
+    } else {
+      discount = Math.round(subtotal * appliedCoupon.amount / 100);
+    }
+  }
+  return { subtotal, discount, final: Math.max(0, subtotal - discount) };
+}
+
+function applyCoupon(){
+  const code = (document.getElementById('couponCode').value || '').trim().toUpperCase();
+  const msgEl = document.getElementById('couponMessage');
+  if (!code) {
+    msgEl.style.color = '#ffd700';
+    msgEl.innerText = 'Enter a coupon code';
+    return;
+  }
+  if (appliedCoupon){
+    msgEl.style.color = '#ffd700';
+    msgEl.innerText = 'A coupon is already applied. Remove it to apply another.';
+    return;
+  }
+  const rule = couponCodes[code];
+  if (!rule){
+    msgEl.style.color = '#ff6b6b';
+    msgEl.innerText = 'Invalid coupon code';
+    return;
+  }
+  appliedCoupon = { code, ...rule };
+  msgEl.style.color = '#8df58c';
+  msgEl.innerText = `Coupon applied: ${code} — ${rule.description}`;
+  document.getElementById('couponCode').value = code;
+  document.getElementById('removeCouponBtn').style.display = 'inline-flex';
+  document.getElementById('applyCouponBtn').disabled = true;
+  displayCart();
+}
+
+function removeCoupon(){
+  appliedCoupon = null;
+  const msgEl = document.getElementById('couponMessage');
+  msgEl.style.color = '#ffd700';
+  msgEl.innerText = 'Coupon removed';
+  document.getElementById('couponCode').value = '';
+  document.getElementById('removeCouponBtn').style.display = 'none';
+  document.getElementById('applyCouponBtn').disabled = false;
+  displayCart();
+}
+
+function searchProducts(input) {
+  appliedCoupon = null;
+  const msgEl = document.getElementById('couponMessage');
+  msgEl.style.color = '#ffd700';
+  msgEl.innerText = 'Coupon removed';
+  document.getElementById('couponCode').value = '';
+  displayCart();
+}
+
 function searchProducts(input) {
   let query = input.value.trim().toLowerCase();
   let section = input.closest("section");
@@ -1519,7 +1673,6 @@ showPage(getPageFromUrl(), {
 
 </body>
 </html>
-
 
 
 
