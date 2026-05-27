@@ -823,6 +823,12 @@ nav a {
       <input id="name" placeholder="Name">
       <input id="phone" placeholder="Phone">
       <input id="address" placeholder="Address">
+
+      <div class="payment-method">
+        <strong style="color:#fff8dc; display:block; margin-bottom:8px;">Payment method</strong>
+        <label><input type="radio" name="paymentMethod" value="Cash on Delivery" checked> Cash on Delivery</label>
+        <label><input type="radio" name="paymentMethod" value="UPI Payment"> UPI Payment</label>
+      </div>
     </div>
 
     <button onclick="orderNow()" class="btn cart-checkout-btn">Order on WhatsApp</button>
@@ -1149,6 +1155,12 @@ let count=0;
 cart.forEach(i=>count+=i.qty);
 document.getElementById("cartCount").innerText=count;
 }
+
+function getSelectedPaymentMethod() {
+  let selected = document.querySelector('input[name="paymentMethod"]:checked');
+  return selected ? selected.value : 'Cash on Delivery';
+}
+
 // ORDER
 function orderNow(){
 if(cart.length===0){ alert("Cart empty"); return; }
@@ -1156,6 +1168,7 @@ if(cart.length===0){ alert("Cart empty"); return; }
 let name=document.getElementById("name").value || "Not given";
 let phone=document.getElementById("phone").value || "Not given";
 let address=document.getElementById("address").value || "Not given";
+let paymentMethod = getSelectedPaymentMethod();
 
 let total=0;
 let text="🛒 New Order\n\n📦 Order ID: ORD"+Math.floor(Math.random()*1000000)+"\n\n";
@@ -1171,6 +1184,7 @@ text+=`\n💰 Total: ₹${totals.final}`;
 if (appliedCoupon) {
   text += ` (Saved ₹${totals.discount} with ${appliedCoupon.code})`;
 }
+text+=`\n\n💳 Payment: ${paymentMethod}`;
 text+=`\n\n👤 Name: ${name}\n📞 Phone: ${phone}\n🏠 Address: ${address}`;
 
 window.open("https://wa.me/917676610183?text="+encodeURIComponent(text));
