@@ -11,7 +11,8 @@ body { margin:0; font-family: Arial; background:#0f2e1f; color:#fff; }
 
 .slider {
   width: 100%;
-  height: 300px; /* 👈 important */
+  min-height: 260px;
+  aspect-ratio: 16 / 9;
   position: relative;
   overflow: hidden;
   border-radius: 10px;
@@ -153,7 +154,11 @@ nav a {
   text-shadow: 0 0 12px rgba(255, 215, 0, 0.22);
 }
 .card img {
-  width: 100%; height: 220px; object-fit: contain;
+  width: 100%;
+  max-height: 260px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
   background:white; border-radius:14px;
 }
 
@@ -566,6 +571,13 @@ nav a {
   .card { width: 100%; max-width: 340px; padding: 20px 18px 22px; }
   .card h3 { min-height: auto; font-size: 20px; margin-bottom: 12px; }
   .product-description { max-width: 100%; font-size: 16.5px; line-height: 1.6; }
+  .slider {
+    min-height: 200px;
+    aspect-ratio: 16 / 9;
+  }
+  .card img {
+    max-height: 220px;
+  }
   .zoom-modal { padding: 10px; }
   .zoom-modal-content {
     width: 92vw;
@@ -636,8 +648,8 @@ nav a {
 <section id="home" class="section">
 
 <div class="slider">
-  <img src=" https://i.ibb.co/Y4t3SJxF/sale-poster.png" class="slide active">
-  <img src=" https://i.ibb.co/nspX0pgW/15-discount.png" class="slide active">
+  <img src="https://i.ibb.co/zHh5QX68/IMG-20260624-104049.png" class="slide active">
+  <img src="https://i.ibb.co/TBHFvL48/15-nature15.png" class="slide active">
  
   <div class="slider-dots hero-slider-dots">
     <button class="slider-dot active" type="button" aria-label="Show hero photo 1"></button>
@@ -812,7 +824,6 @@ nav a {
       <div id="couponMessage" class="coupon-message">Enter a coupon code like FIRST10 or SAVE50.</div>
     </div>
 
-    
     <div class="summary-breakdown">
       <div class="summary-line"><span>Original subtotal</span><span id="originalSubtotal">₹0</span></div>
       <div class="summary-line"><span>Discount</span><span id="discountAmount">₹0</span></div>
@@ -946,7 +957,6 @@ let cart = [];
 const couponCodes = {
   "SAVE50": { type: "fixed", amount: 50, description: "₹50 off" },
 "KIRAN100": { type: "fixed", amount: 100, description: "₹100 off" },
-  "NATURE15": { type: "percent", amount: 15, description: "₹15% off" },
     "FIRST10": { type: "percent", amount: 10, description: "10% off" }
 };
 let appliedCoupon = null;
