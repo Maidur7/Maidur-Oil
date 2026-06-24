@@ -812,6 +812,7 @@ nav a {
       <div id="couponMessage" class="coupon-message">Enter a coupon code like FIRST10 or SAVE50.</div>
     </div>
 
+    
     <div class="summary-breakdown">
       <div class="summary-line"><span>Original subtotal</span><span id="originalSubtotal">₹0</span></div>
       <div class="summary-line"><span>Discount</span><span id="discountAmount">₹0</span></div>
@@ -945,6 +946,7 @@ let cart = [];
 const couponCodes = {
   "SAVE50": { type: "fixed", amount: 50, description: "₹50 off" },
 "KIRAN100": { type: "fixed", amount: 100, description: "₹100 off" },
+  "NATURE15": { type: "percent", amount: 15, description: "₹15% off" },
     "FIRST10": { type: "percent", amount: 10, description: "10% off" }
 };
 let appliedCoupon = null;
