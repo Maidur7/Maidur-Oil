@@ -649,7 +649,7 @@ nav a {
 
 <div class="slider">
   <img src="https://i.ibb.co/zHh5QX68/IMG-20260624-104049.png" class="slide active">
-  <img src="https://i.ibb.co/67RY2S23/15-nature15-1.png" class="slide active">
+  <img src="https://i.ibb.co/TBHFvL48/15-nature15.png" class="slide active">
  
   <div class="slider-dots hero-slider-dots">
     <button class="slider-dot active" type="button" aria-label="Show hero photo 1"></button>
@@ -821,7 +821,8 @@ nav a {
         <button id="applyCouponBtn" class="btn" type="button" onclick="applyCoupon()">Apply Coupon</button>
         <button id="removeCouponBtn" class="btn coupon-remove-btn" type="button" onclick="removeCoupon()" style="display:none;">Remove</button>
       </div>
-    
+      <div id="couponMessage" class="coupon-message"></div>
+    </div>
 
     <div class="summary-breakdown">
       <div class="summary-line"><span>Original subtotal</span><span id="originalSubtotal">₹0</span></div>
@@ -955,9 +956,9 @@ let cart = [];
 // Coupon data stored separately for easy editing
 const couponCodes = {
   "SAVE50": { type: "fixed", amount: 50, description: "₹50 off" },
-
-  "MJ": { type: "percent", amount: 5, description: "5% off" },
-    "FIRST10": { type: "percent", amount: 10, description: "10% off" }
+  "KIRAN100": { type: "fixed", amount: 100, description: "₹100 off" },
+  "FIRST10": { type: "percent", amount: 10, description: "10% off" },
+  "MJ": { type: "percent", amount: 5, description: "5% off" }
 };
 let appliedCoupon = null;
 let currentPage = "home";
@@ -1234,8 +1235,10 @@ function applyCoupon(){
     return;
   }
   appliedCoupon = { code, ...rule };
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const totals = calculateTotals(subtotal);
   msgEl.style.color = '#8df58c';
-  msgEl.innerText = `Coupon applied: ${code} — ${rule.description}`;
+  msgEl.innerText = `Coupon applied: ${code} — ${rule.description}. You save ₹${totals.discount} and get free delivery.`;
   document.getElementById('couponCode').value = code;
   document.getElementById('removeCouponBtn').style.display = 'inline-flex';
   document.getElementById('applyCouponBtn').disabled = true;
